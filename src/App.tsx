@@ -76,19 +76,27 @@ export function App() {
   },[])
 
 return (
-  <div>
-    <>
+  <div className='box'>
+    <div>
       <input type="file" onChange={handleFileChange} />
       <button className = 'button' onClick={handleUploadClick}>Upload</button>
-    </>
-    <>
-      {paths && paths.map(path => 
-      <div className='list-items'>
-        <ol>{path} </ol>
-        <button onClick={() => handleDeleteClick(path)}> X </button>
-        <button onClick={() => handleDownloadClick(path)}> {'\u2B07'} </button>
-      </div>)}
-    </>
+    </div>
+    <div>
+      <table>
+        <tr>
+          <th> File Name </th>
+          <th> Delete </th>
+          <th> Download </th>
+        </tr>
+        {paths && paths.map(path => 
+        <tr>
+          <td>{path}</td>
+          <td> <button onClick={() => handleDeleteClick(path)}>X</button></td>
+          <td> <button onClick={() => handleDownloadClick(path)}> {'\u2B07'} </button></td>
+        </tr>
+        )}
+      </table>
+    </div>
   </div>
 );
 }

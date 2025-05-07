@@ -8,7 +8,6 @@ body {
   justify-content: center;
   align-items: center;
 }
-
 main {
   display: flex;
   flex-direction: column;
@@ -17,14 +16,26 @@ main {
 input{
   margin: 100px;
 }
-.list-items{
+.box{
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
+}
+table{
+  align-self: center;
   button{
     background-color: transparent;
     color: #1a1a1a;
   }
+}
+th{
+  padding: 20px;
+  font-weight: bold;
+  align-content: center;
+}
+td{
+  padding : 10px;
+  align-content: center;
 }
 button {
   border-radius: 8px;
@@ -41,9 +52,4 @@ button {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
-}
-
-a {
-  font-weight: 800;
-  text-decoration: none;
 }
