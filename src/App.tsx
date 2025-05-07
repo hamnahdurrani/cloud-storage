@@ -8,15 +8,20 @@ export function App() {
     setFile(event.target.files?.[0]);
   };
 
-  const handleClick = () => {
-    if (!file) {
-      return;
+  const handleClick = async () => {
+    if (!file) return;
+  
+    try {
+      const result = await uploadData({
+        path: `uploads/${file.name}`,
+        data: file,
+      }).result;
+      console.log('Upload success:', result);
+    } catch (error) {
+      console.error('Upload failed:', error);
     }
-    uploadData({
-      path: `picture-submissions/${file.name}`,
-      data: file,
-    });
   };
+  
 
   return (
     <div>
