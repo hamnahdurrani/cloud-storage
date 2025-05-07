@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  background: linear-gradient(180deg, rgb(117, 81, 194), rgb(255, 255, 255));
+  background: linear-gradient(180deg, rgb(26, 129, 137), rgb(255, 255, 255));
   display: flex;
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   height: 100vh;
@@ -14,7 +14,18 @@ main {
   flex-direction: column;
   align-items: stretch;
 }
-
+input{
+  margin: 100px;
+}
+.list-items{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  button{
+    background-color: transparent;
+    color: #1a1a1a;
+  }
+}
 button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -27,36 +38,9 @@ button {
   transition: border-color 0.25s;
   color: white;
 }
-button:hover {
-  border-color: #646cff;
-}
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
-}
-
-ul {
-  padding-inline-start: 0;
-  margin-block-start: 0;
-  margin-block-end: 0;
-  list-style-type: none;
-  display: flex;
-  flex-direction: column;
-  margin: 8px 0;
-  border: 1px solid black;
-  gap: 1px;
-  background-color: black;
-  border-radius: 8px;
-  overflow: auto;
-}
-
-li {
-  background-color: white;
-  padding: 8px;
-}
-
-li:hover {
-  background: #dadbf9;
 }
 
 a {
