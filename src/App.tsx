@@ -7,6 +7,7 @@ import { getUrl } from 'aws-amplify/storage';
 export function App() {
   const [uploadFilename, setUploadFilename] = useState<string>();
   const [filesFromS3, setFilesFromS3] = useState<ListAllWithPathOutput>();
+  const paths = filesFromS3?.items.map(item => item.path);
 
   const loadFiles = async () => {
     try {
@@ -56,6 +57,20 @@ export function App() {
       console.log('File Deletion failed', error);
     }
   }
+
+  const handleDownloadClick = async(downloadFilename) =>{
+    try {
+      const linkToStorageFile = await getUrl({
+        path: `${downloadFilename}`,
+      });
+      window.open(linkToStorageFile.url, '_blank');
+      console.log('File Download success');
+      await loadFiles();
+    } catch (error) {
+      console.log('File Download failed', error);
+    }
+  }
+  
   useEffect(() => {
     loadFiles();
   },[])
@@ -67,10 +82,11 @@ return (
       <button className = 'button' onClick={handleUploadClick}>Upload</button>
     </>
     <>
-      {filesFromS3?.items && filesFromS3?.items.map(item => 
+      {paths && paths.map(path => 
       <div className='list-items'>
-        <ol>{item.path} </ol>
-        <button onClick={() => handleDeleteClick(item.path)}> X </button>
+        <ol>{path} </ol>
+        <button onClick={() => handleDeleteClick(path)}> X </button>
+        <button onClick={() => handleDownloadClick(path)}> {'\u2B07'} </button>
       </div>)}
     </>
   </div>
