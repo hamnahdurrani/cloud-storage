@@ -1,32 +1,52 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { uploadData } from 'aws-amplify/storage';
+import { list } from 'aws-amplify/storage';
 
 export function App() {
-  const [file, setFile] = React.useState();
+  const [uploadFilename, setUploadFilename] = useState<string>();
+  const [filesFromS3, setFilesFromS3] = useState<any[]>();
 
+  const loadFiles = async () => {
+    try {
+      const response = await list({
+        path: 'uploads/',
+        options: {
+          listAll: true,
+        },
+      });
+      setFilesFromS3(response);
+      console.log('list success:', response);
+    } catch (error) {
+      console.error('list failed:', error);
+    }
+    
+  };
+  
   const handleChange = (event) => {
-    setFile(event.target.files?.[0]);
+    setUploadFilename(event.target.files?.[0]);
   };
 
   const handleClick = async () => {
-    if (!file) return;
+    if (!uploadFilename) return;
   
     try {
       const result = await uploadData({
-        path: `uploads/${file.name}`,
-        data: file,
+        path: `uploads/${uploadFilename.name}`,
+        data: uploadFilename,
       }).result;
       console.log('Upload success:', result);
     } catch (error) {
       console.error('Upload failed:', error);
     }
-  };
-  
 
-  return (
-    <div>
-      <input type="file" onChange={handleChange} />
-      <button onClick={handleClick}>Upload</button>
-    </div>
-  );
+    await loadFiles();
+  };
+
+return (
+  <div>
+    <input type="file" onChange={handleChange} />
+    <button onClick={handleClick}>Upload</button>
+    <p>{JSON.stringify(filesFromS3)}</p>
+  </div>
+);
 }
