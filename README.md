@@ -1,25 +1,57 @@
-## AWS Amplify React+Vite Starter Template
+# Cloud Storage Manager
 
-This repository provides a starter template for creating applications using React+Vite and AWS Amplify, emphasizing easy setup for authentication, API, and database capabilities.
+This is a cloud storage file manager built with **React+Vite** and **AWS Amplify**.
 
-## Overview
+## Table of Contents
 
-This template equips you with a foundational React application integrated with AWS Amplify, streamlined for scalability and performance. It is ideal for developers looking to jumpstart their project with pre-configured AWS services like Cognito, AppSync, and DynamoDB.
+1. [Project Overview](#project-overview)
+2. [Recording](#recording)
+3. [Features](#features)
+4. [Technologies Used](#technologies-used)
+4. [Getting Started](#getting-started)
+---
 
+## Project Overview
+This project is a fully functional **cloud-based file manager** built with **React** and **AWS Amplify**, designed to mimic a lightweight version of a service like Google Drive or Dropbox. It allows users to seamlessly **upload**, **view**, **download**, and **delete files** stored in an **Amazon S3 bucket**, all through a clean and intuitive web interface.
+
+
+---
+## Recording
+
+---
 ## Features
 
-- **Authentication**: Setup with Amazon Cognito for secure user authentication.
-- **API**: Ready-to-use GraphQL endpoint with AWS AppSync.
-- **Database**: Real-time database powered by Amazon DynamoDB.
+- Integration with AWS Amplify and S3
+- Live file listing with automatic updates
+- Secure file uploads with full S3 path control
+- List all files with size and modified date
+- Delete files from the S3 bucket
+- Pre-signed URLs for safe downloading
+- Responsive UI for ease of navigation and clarity
 
-## Deploying to AWS
+---
 
-For detailed instructions on deploying your application, refer to the [deployment section](https://docs.amplify.aws/react/start/quickstart/#deploy-a-fullstack-app-to-aws) of our documentation.
+##  Technologies Used
 
-## Security
+- React
+- TypeScript
+- CSS
+- IAM
+- AWS CLI
+- Sandbox Environment
+- AWS Amplify (Storage module)
+- Amazon S3
 
-See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
+---
 
-## License
+## Getting Started
 
-This library is licensed under the MIT-0 License. See the LICENSE file.
+```bash
+# Clone the repository
+git clone https://github.com/your-username/cloud-dashboard.git
+
+# Install dependencies
+npm install
+
+# Start the development server
+npm run dev
