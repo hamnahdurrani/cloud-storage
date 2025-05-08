@@ -7,7 +7,6 @@ import { getUrl } from 'aws-amplify/storage';
 export function App() {
   const [uploadFilename, setUploadFilename] = useState<string>();
   const [filesFromS3, setFilesFromS3] = useState<ListAllWithPathOutput>();
-  const paths = filesFromS3?.items.map(item => item.path);
 
   const loadFiles = async () => {
     try {
@@ -76,27 +75,37 @@ export function App() {
   },[])
 
 return (
-  <div className='box'>
-    <div>
-      <input type="file" onChange={handleFileChange} />
-      <button className = 'button' onClick={handleUploadClick}>Upload</button>
+  <>
+    <header>
+      Cloud Dashboard
+    </header>
+    <div className='container'>
+      <div className='upload-area'>
+        <input type="file" onChange={handleFileChange} />
+        <button className = 'upload-button' onClick={handleUploadClick}>Upload</button>
+      </div>
+      <h2> Stored Files </h2>
+      <div>
+        <table >
+          <tr>
+            <th> File Name </th>
+            <th> Size </th>
+            <th> Date Modified </th>
+            <th> Delete </th>
+            <th> Download </th>
+          </tr>
+          {filesFromS3?.items && filesFromS3?.items.map(item =>  
+          <tr>
+            <td>{item.path}</td>
+            <td>{(item.size / 1024).toFixed(2)} KB </td>
+            <td>{JSON.stringify(item.lastModified).substring(1,11)}</td>
+            <td> <button onClick={() => handleDeleteClick(item.path)}> X </button></td>
+            <td> <button onClick={() => handleDownloadClick(item.path)}> {'\u2B07'} </button></td>
+          </tr>
+          )}
+        </table>
+      </div>
     </div>
-    <div>
-      <table>
-        <tr>
-          <th> File Name </th>
-          <th> Delete </th>
-          <th> Download </th>
-        </tr>
-        {paths && paths.map(path => 
-        <tr>
-          <td>{path}</td>
-          <td> <button onClick={() => handleDeleteClick(path)}>X</button></td>
-          <td> <button onClick={() => handleDownloadClick(path)}> {'\u2B07'} </button></td>
-        </tr>
-        )}
-      </table>
-    </div>
-  </div>
+  </>
 );
 }
