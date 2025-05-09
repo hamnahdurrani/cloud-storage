@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { ChangeEventHandler, useEffect, useState } from 'react';
 import { ListAllWithPathOutput, uploadData } from 'aws-amplify/storage';
 import { list } from 'aws-amplify/storage';
 import { remove } from 'aws-amplify/storage';
@@ -24,8 +24,9 @@ export function App() {
     
   };
   
-  const handleFileChange = (event) => {
-    setUploadFilename(event.target.files?.[0]);
+  const handleFileChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    setUploadFilename(event.target.files?.[0]?.name);
+
   };
 
   const handleUploadClick = async () => {
@@ -33,7 +34,7 @@ export function App() {
   
     try {
       const result = await uploadData({
-        path: `uploads/${uploadFilename.name}`,
+        path: `uploads/${uploadFilename}`,
         data: uploadFilename,
       }).result;
       console.log('Upload success:', result);
@@ -44,11 +45,10 @@ export function App() {
     await loadFiles();
   };
 
-  const handleDeleteClick = async (deleteFilename) =>{
+  const handleDeleteClick = async (deleteFilename: string) =>{
     try {
       await remove({ 
-        path: `${deleteFilename}`,
-        bucket: 'amplifyAdminDrive',
+        path: deleteFilename,
       });
       console.log('File Deletion success');
       await loadFiles();
@@ -57,7 +57,7 @@ export function App() {
     }
   }
 
-  const handleDownloadClick = async(downloadFilename) =>{
+  const handleDownloadClick = async(downloadFilename: string) =>{
     try {
       const linkToStorageFile = await getUrl({
         path: `${downloadFilename}`,
@@ -97,7 +97,7 @@ return (
           {filesFromS3?.items && filesFromS3?.items.map(item =>  
           <tr>
             <td>{item.path}</td>
-            <td>{(item.size / 1024).toFixed(2)} KB </td>
+            <td>{item.size && (item.size / 1024).toFixed(2)} KB </td>
             <td>{JSON.stringify(item.lastModified).substring(1,11)}</td>
             <td> <button onClick={() => handleDeleteClick(item.path)}> X </button></td>
             <td> <button onClick={() => handleDownloadClick(item.path)}> {'\u2B07'} </button></td>
